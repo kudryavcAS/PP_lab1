@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.lang.Exception;
 
+
 class Parameters {
     public int k;
     public double x;
@@ -30,7 +31,10 @@ public class TaylorRow {
             try {
                 enterNumbers(obj, in);
                 break;
-            } catch (Exception ex) {
+            } catch (InputMismatchException ex) {
+                System.out.println("Error: Invalid data format");
+                in.nextLine(); //
+            } catch (IllegalArgumentException ex) {
                 System.out.println("Error: " + ex.getMessage());
                 in.nextLine();
             }
@@ -41,12 +45,12 @@ public class TaylorRow {
 
     }
 
-    static void enterNumbers(Parameters obj, Scanner in) throws Exception {
+    static void enterNumbers(Parameters obj, Scanner in)  {
         System.out.println("Enter natural k and real х ∈ (-1, 1) through a space");
         obj.k = in.nextInt();
         obj.x = in.nextDouble();
         if (obj.k < 1 || obj.x > 1 || obj.x < -1) {
-            throw new Exception("Incorrect input");
+            throw new IllegalArgumentException("The range of numbers is broken");
         }
 
     }
