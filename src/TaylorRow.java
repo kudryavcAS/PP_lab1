@@ -1,32 +1,53 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.lang.Exception;
+
+class Parameters {
+    public int k;
+    public double x;
+
+    Parameters(int k, double x) {
+        this.k = k;
+        this.x = x;
+    }
+
+    Parameters() {
+        this.k = 0;
+        this.x = 0;
+    }
+
+}
 
 public class TaylorRow {
 
     public static void main(String[] args) {
         System.out.println("This program calculate function sqrt(1+x) using Taylor row." +
                 "The calculations are completed when the next term turns out to be modulo less then 10^(-k)");
-        System.out.println("Enter natural k and real х ∈ (-1, 1) through a space");
 
         Scanner in = new Scanner(System.in);
-        int k = 0;
-        double x = 2;
-
-        try {
-            k = in.nextInt();
-            x = in.nextDouble();
-        } catch (InputMismatchException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            main(null);
+        Parameters obj = new Parameters();
+        while (true) {
+            try {
+                enterNumbers(obj, in);
+                break;
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex.getMessage());
+                in.nextLine();
+            }
         }
 
-        if (x > 1 || x < -1 || k < 1) {
-            System.out.println("Enter a correct numbers.");
-            main(null);
-        }
+        System.out.printf("Taylor row result: %.3f\n", calculateRow(obj.k, obj.x));
+        System.out.printf("Standart functions result: %.3f\n", calculateFunc(obj.x));
 
-        System.out.printf("Taylor row result: %.3f\n", calculateRow(k, x));
-        System.out.printf("Standart functions result: %.3f\n", calculateFunc(x));
+    }
+
+    static void enterNumbers(Parameters obj, Scanner in) throws Exception {
+        System.out.println("Enter natural k and real х ∈ (-1, 1) through a space");
+        obj.k = in.nextInt();
+        obj.x = in.nextDouble();
+        if (obj.k < 1 || obj.x > 1 || obj.x < -1) {
+            throw new Exception("Incorrect input");
+        }
 
     }
 
