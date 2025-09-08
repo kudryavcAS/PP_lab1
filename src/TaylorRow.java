@@ -1,7 +1,5 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
-import java.lang.Exception;
-
 
 class Parameters {
     public int k;
